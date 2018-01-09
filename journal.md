@@ -538,7 +538,7 @@ void loop() {
 
 I had a previous version of this code I wanted to comment on and explain but due to a fault I spent 2 days trying to get rid of I accidentally deleted it. Here's the actual finished piece:
 
-####Code:
+**Code**:
 
 ```
 //#define DEBUG
@@ -607,6 +607,7 @@ void loop() {
 }
 ```
 
+Here is the code running: https://www.youtube.com/watch?v=G_4klbTj600
 
 ### Conclusions:
 
@@ -623,7 +624,7 @@ This became very clear by the 4th task where I had to write several versions of 
 
 We've been asked to create a Robotic Arm with two degrees of freedom which use servo motors to sweep back and forth. It must be able to sweep back and forth using a sine-cosine wave, then in response to signals from ROS, the robotic operating system.
 
-####Control via RC Servo
+**Control via RC Servo**
 
 ```
 #include <Servo.h>
@@ -661,6 +662,7 @@ void loop() {
 	}
 }
 
+
 void writeto (){
 	servo1.write(cosA);
 	servo2.write(sinB);
@@ -670,8 +672,23 @@ void writeto (){
 
  This is very simple code that sweeps the servo back and forth using the Servo.h library provided by Arduino. The sweep "speed" is based on a sine-cosine wave.
 
+Here they are sweeping: https://www.youtube.com/watch?v=T_9FXfGmq7Y
+
 ### Potentiometer
 
 ### The Physical Design
 
+###ROS Control
+
+Using the two pieces of code provided, we managed to get ROS to control it, as shown in this video:
+
+And here are the pieces of code:
+
+```
+
+```
+
+```
+
+```
 
