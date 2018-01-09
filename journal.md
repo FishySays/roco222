@@ -250,15 +250,16 @@ There are four ways of controlling them, which are covered in this lab. They are
 
  Motor
 
-### Full Step
 
 - 1 Phase at a time
 - 4 steps per revolution
 - 90 degree rotation
 
- Truth Table:
+####Truth Table:
 ![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_9.png)
- Code:
+
+
+####Code:
 
 ```
 void setup() {
@@ -323,12 +324,12 @@ void loop() {
 - 4 Steps per revolution
 - More Torque than 1 Phase
 
- Truth Table:
+####Truth Table:
 
 ![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_10.png)
 
 
- Code:
+####Code:
 
 ```
 //Same setup and variables as Full Step, trimmed out to reduce size of this file
@@ -379,11 +380,11 @@ void loop() {
 - 8 Steps per revolution
 - 45 degree rotation
 
- Truth Table:
+####Truth Table:
 
 ![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_11.png)
 
- Code:
+####Code:
 
 (again, same variables and setup as above)
 
@@ -486,30 +487,26 @@ int check (int Aspeed, boolean AHL1, boolean AHL2, int Bspeed, boolean BHL1, boo
 	digitalWrite(8, BHL2);
 	delay(10);
 }
-```
-```
+
 void loop() {
-check(255, HIGH, LOW, 255, HIGH, LOW);//fwdfwd
-check(255, HIGH, LOW, 127, HIGH, LOW);//fwdfwdhalf
-check(255, HIGH, LOW, 0, LOW, HIGH);//fwdstop
-check(255, HIGH, LOW, 127, LOW, LOW);//fwdbackhalf
-check(255, HIGH, LOW, 255, LOW, LOW);//fwdback
-check(127, HIGH, LOW, 255, LOW, LOW);//fwdhalfback
-check(0, LOW, HIGH, 255, LOW, LOW);//stopback
-check(127, LOW, LOW, 255, LOW, LOW);//backhalfback
-check(255, LOW, LOW, 255, LOW, LOW);//backback
-check(255, LOW, LOW, 127, LOW, LOW);//backbackhalf
-check(255, LOW, LOW, 0, LOW, HIGH);//backstop
-check(255, LOW, LOW, 127, HIGH, LOW);//backfwdhalf
-check(255, LOW, LOW, 255, HIGH, LOW);//backfwd
-check(127, LOW, LOW, 255, HIGH, LOW);//backhalffwd
-check(0, LOW, HIGH, 255, HIGH, LOW);//stopfwd
-check(127, HIGH, LOW, 255, HIGH, LOW);//fwdhalffwd
-```
+	check(255, HIGH, LOW, 255, HIGH, LOW);//fwdfwd
+	check(255, HIGH, LOW, 127, HIGH, LOW);//fwdfwdhalf
+	check(255, HIGH, LOW, 0, LOW, HIGH);//fwdstop
+	check(255, HIGH, LOW, 127, LOW, LOW);//fwdbackhalf
+	check(255, HIGH, LOW, 255, LOW, LOW);//fwdback
+	check(127, HIGH, LOW, 255, LOW, LOW);//fwdhalfback
+	check(0, LOW, HIGH, 255, LOW, LOW);//stopback
+	check(127, LOW, LOW, 255, LOW, LOW);//backhalfback
+	check(255, LOW, LOW, 255, LOW, LOW);//backback
+	check(255, LOW, LOW, 127, LOW, LOW);//backbackhalf
+	check(255, LOW, LOW, 0, LOW, HIGH);//backstop
+	check(255, LOW, LOW, 127, HIGH, LOW);//backfwdhalf
+	check(255, LOW, LOW, 255, HIGH, LOW);//backfwd
+	check(127, LOW, LOW, 255, HIGH, LOW);//backhalffwd
+	check(0, LOW, HIGH, 255, HIGH, LOW);//stopfwd
+	check(127, HIGH, LOW, 255, HIGH, LOW);//fwdhalffwd
+}
 
-### https://www.evernote.com/Home.action?_sourcePage=-9vv2m58H1riMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp... 21/25
-
-# }
 
 ### Microstepping
 
@@ -518,70 +515,53 @@ check(127, HIGH, LOW, 255, HIGH, LOW);//fwdhalffwd
 - Gradually transfers from one to another
 - Duty cycle of A is decreased as B increases
 
- Essentially, when the value sine is at 90 degrees, it's at maximum voltage (5), and when at 270 degrees, it's at minimum voltage, and
+ Essentially, when the value sine is at 90 degrees, it's at maximum voltage (5), and when at 270 degrees, it's at minimum voltage, and the cosine wave is 90 degrees out of phase, so is at minimum at 180 degrees, and at maximum at 0/360.
 
- the cosine wave is 90 degrees out of phase, so is at minimum at 180 degrees, and at maximum at 0/360.
+I had a previous version of this code I wanted to comment on and explain but due to a fault I spent 2 days trying to get rid of I accidentally deleted it. Here's the actual finished piece:
 
- I had a previous version of this code I wanted to comment and explain but due to a fault I spent 2 days trying to get rid of I accidentally
-
- deleted it. Here's the actual finished piece:
-
- Code:
+####Code:
 
 ```
 //#define DEBUG
-```
-```
+
 // Motor winding pins
 #define A_DIR_PIN 12
 #define A_PWM_PIN 3
 #define B_DIR_PIN 13
 #define B_PWM_PIN 1 1
-```
-```
+
 #define FORWARD HIGH
 #define BACKWARD LOW
-```
-```
+
 #define TWO_PI 6.28318530718
 #define STEP_PERIOD 120
-```
-```
+
 #define MICROSTEP_DIVISIONS 8
-```
 
-### https://www.evernote.com/Home.action?_sourcePage=-9vv2m58H1riMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp... 22/25
 
-```
 void setup() {
-// Configure pins for motor windings
-pinMode(A_DIR_PIN, OUTPUT);
-pinMode(A_PWM_PIN, OUTPUT);
-```
-```
-pinMode(B_DIR_PIN, OUTPUT);
-pinMode(B_PWM_PIN, OUTPUT);
-```
-```
-Serial.begin(9600);
+	// Configure pins for motor windings
+	pinMode(A_DIR_PIN, OUTPUT);
+	pinMode(A_PWM_PIN, OUTPUT);
+	pinMode(B_DIR_PIN, OUTPUT);
+	pinMode(B_PWM_PIN, OUTPUT);
+	Serial.begin(9600);
 }
-```
-```
+
+
 void setPhase(double angle) {
-int aPWM = 255 * cos(angle); //winding A is the cosine wave
-int aDir = (aPWM > 0.0)? FORWARD : BACKWARD;
-aPWM = abs(aPWM); //these two lines determine if it is negative, then make it not negative, as the motors do not accept negative numbers to make them run
-digitalWrite(A_DIR_PIN, aDir);
-analogWrite(A_PWM_PIN, aPWM);
-```
-```
-int bPWM = 255 * sin(angle); //winding B is the sine wave
-int bDir = (bPWM > 0.0)? FORWARD : BACKWARD;
-bPWM = abs(bPWM);
-digitalWrite(B_DIR_PIN, bDir);
-analogWrite(B_PWM_PIN, bPWM);
-```
-```
+	int aPWM = 255 * cos(angle); //winding A is the cosine wave
+	int aDir = (aPWM > 0.0)? FORWARD : BACKWARD;
+	aPWM = abs(aPWM); //these two lines determine if it is negative, then make it not negative, as the motors do not accept negative numbers to make them run
+	digitalWrite(A_DIR_PIN, aDir);
+	analogWrite(A_PWM_PIN, aPWM);
+	
+	int bPWM = 255 * sin(angle); //winding B is the sine wave
+	int bDir = (bPWM > 0.0)? FORWARD : BACKWARD;
+	bPWM = abs(bPWM);
+	digitalWrite(B_DIR_PIN, bDir);
+	analogWrite(B_PWM_PIN, bPWM);
+
 #ifdef DEBUG
 Serial.print("=================="); Serial.print(angle); Serial.println("==================");
 Serial.println();
@@ -592,105 +572,83 @@ Serial.print("bPWM: "); Serial.println(bPWM);
 Serial.print("bDir: "); Serial.println(bDir);
 Serial.println();
 Serial.println("======================================================");
-```
 
-### https://www.evernote.com/Home.action?_sourcePage=-9vv2m58H1riMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp... 23/25
-
-```
 #endif
 } //debugging just to see where it goes wrong
-```
-```
+
+
 void loop() {
-for (int microStep = 0; microStep < MICROSTEP_DIVISIONS; microStep++) {
-double phaseAngle = (double)microStep * TWO_PI / (double)MICROSTEP_DIVISIONS;
-```
-```
-setPhase(phaseAngle);
-```
-```
-delay(STEP_PERIOD / MICROSTEP_DIVISIONS);
-}
+	for (int microStep = 0; microStep < MICROSTEP_DIVISIONS; microStep++) {
+		double phaseAngle = (double)microStep * TWO_PI / (double)MICROSTEP_DIVISIONS;
+
+		setPhase(phaseAngle);
+
+		delay(STEP_PERIOD / MICROSTEP_DIVISIONS);
+	}
 }
 ```
+
+
 ### Conclusions:
 
- Overall I feel this lab session went well and I definitely learned a lot of different techniques in Arduino. The first 2 were very simplistic,
+Overall I feel this lab session went well and I definitely learned a lot of different techniques in Arduino. The first 2 were very simplistic, but by the third task the simplistic techniques I was using, while they worked, could be cleaned up to make the code work smoother.
 
- but by the third task the simplistic techniques I was using, while they worked, could be cleaned up to make the code work smoother.
+This became very clear by the 4th task where I had to write several versions of the code until I settled on the piece above.
 
- This became very clear by the 4th task where I had to write several versions of the code until I settled on the piece above.
+
 
 ## Robotic Arm Mini Project
 
 ### The Brief
 
- We've been asked to create a Robotic Arm with two degrees of freedom which use servo motors to sweep back and forth. It must be
+We've been asked to create a Robotic Arm with two degrees of freedom which use servo motors to sweep back and forth. It must be able to sweep back and forth using a sine-cosine wave, then in response to signals from ROS, the robotic operating system.
 
- able to sweep back and forth using a sine-cosine wave, then in response to signals from ROS, the robotic operating system.
-
- Control via RC Servo
+####Control via RC Servo
 
 ```
 #include <Servo.h>
-```
-```
+
 Servo servo1;
 Servo servo2;
-```
-```
+
 int count;
 int cosA;
-```
-
-### https://www.evernote.com/Home.action?_sourcePage=-9vv2m58H1riMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp... 24/25
-
-```
 int sinB;
-```
-```
+
 void calc(){
-cosA = cos(count * 0.01745329) * 180;
-sinB = sin(count * 0.01745329) * 180;
+	cosA = cos(count * 0.01745329) * 180;
+	sinB = sin(count * 0.01745329) * 180;
 }
-```
-```
+
 void reset(){
-cosA = 0;
-sinB = 0;
+	cosA = 0;
+	sinB = 0;
 }
-```
-```
+
 void setup(){
-servo1.attach(9);
-servo2.attach(8);
+	servo1.attach(9);
+	servo2.attach(8);
 }
-```
-```
+
 void loop() {
-for (count = 0; count <= 180; count += 1) {
-calc();
-writeto();
+	for (count = 0; count <= 180; count += 1) {
+		calc();
+		writeto();
+	}
+	for (count = 180; count >= 0; count -= 1) {
+		calc();
+		writeto();
+	}
 }
-for (count = 180; count >= 0; count -= 1) {
-calc();
-writeto();
-}
-}
-```
-```
+
 void writeto (){
-servo1.write(cosA);
-servo2.write(sinB);
-delay(15);
+	servo1.write(cosA);
+	servo2.write(sinB);
+	delay(15);
 }
 ```
 
-### https://www.evernote.com/Home.action?_sourcePage=-9vv2m58H1riMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp... 25/25
-
- This is very simple code that sweeps the servo back and forth using the Servo.h library provided by Arduino. The sweep "speed" is
-
- based on a sine-cosine wave.
+ This is very simple code that sweeps the servo back and forth using the Servo.h library provided by Arduino. The sweep "speed" is based on a sine-cosine wave.
 
 ### Potentiometer
 
