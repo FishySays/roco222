@@ -148,117 +148,78 @@ state = !state;
 ```
 ### Conclusion
 
- If I was to redo this I would ensure the two pieces were very far off the board, ensuring that we get a much better read off of the
+ If I was to redo this I would ensure the two pieces were very far off the board, ensuring that we get a much better read off of the system, as there were a few times where it got caught on the board (due to my hand twitching slightly), thereby altering the wave. This in turn, brings up another problem with my system. I should have clamped the two pieces together, instead of what was shown in the image where I stuck it to the table, and held the motor. 
 
- system, as there were a few times where it got caught on the board (due to my hand twitching slightly), thereby altering the wave. This
-
- in turn, brings up another problem with my system. I should have clamped the two pieces together, instead of what was shown in the
-
- image where I stuck it to the table, and held the motor. I also should have split the circle into 8 equal slices, and cut out every odd or
-
- even piece. This would have given a perfect sine wave. Instead, we got a small signal increase every time it went through the gap, and
-
- was dead silent the rest of the time, thereby making a poor "sine" wave.
+I also should have split the circle into 8 equal slices, and cut out every odd or even piece. This would have given a perfect sine wave. Instead, we got a small signal increase every time it went through the gap, and was dead silent the rest of the time, thereby making a poor "sine" wave.
 
 
-### https://www.evernote.com/Home.action?_sourcePage=-9vv2m58H1riMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp=... 9/
+![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_5.png)
+Figure 4. Left, showing what our encoder disk looked like, vs Right, showing what it ideally would have looked like.
 
- Figure 4. Left, showing what our encoder disk looked like, vs Right, showing what it ideally would have looked like.
+
 
 ## Lab 4: Controlling the motor
 
- Arduino is a computer software/hardware hybrid microcontroller kit that uses open source software to develop
+Arduino is a computer software/hardware hybrid microcontroller kit that uses open source software to develop small electronic projects. For this, we utilised the pinouts of it to control a DC motor, primarlily on ports 3, 8, 9, 11, 12 and 13. Using the arduino code, we simply set the pins to high, which sent a pulse along the wire to the motor, turning it on and giving us control. 
 
- small electronic projects. For this, we utilised the pinouts of it to control a DC motor, primarlily on ports 3, 8, 9, 11,
+Rotation direction is changed by setting ports 12(A) and 13(B) to either high or low to grant it a direction, high being forwards, low being backwards, and speed is changed on ports 3(A) and 11(B), which in this example I have simply set to their maximum value (255).
 
- 12 and 13. Using the arduino code, we simply set the pins to high, which sent a pulse along the wire to the motor,
-
- turning it on and giving us control. Rotation direction is changed by setting ports 12(A) and 13(B) to either high
-
- or low to grant it a direction, high being forwards, low being backwards, and speed is changed on ports 3(A) and
-
- 11(B), which in this example I have simply set to their maximum value (255).
 
 ### What is PWM?
 
- PWM stands for Pulse Width Modulation. Commonly used for controlling motors or dimming LED's it works off a duty cycle, which is
+PWM stands for Pulse Width Modulation. Commonly used for controlling motors or dimming LED's it works off a duty cycle, which is "how much the the signal is high". These are usually given as a percentage of the time, for example 50% duty cycle means it is on half the time, giving us essentially half the voltage output, whereas 100% means it's on all the time, giving us maximum voltage output.
 
- "how much the the signal is high". These are usually given as a percentage of the time, for example 50% duty cycle means it is on half
+In hobby motors this is used in a feedback loop with a hall-effect sensor to essentially see how fast the motor is actually moving vs how fast it should be, and retroactively changing it.
 
- the time, giving us essentially half the voltage output, whereas 100% means it's on all the time, giving us maximum voltage output.
-
- In hobby motors this is used in a feedback loop with a hall-effect sensor to essentially see how fast the motor is actually moving vs how
-
- fast it should be, and retroactively changing it.
-
- Here is a graphical example of it from sparkfun.com:
-
-
-### https://www.evernote.com/Home.action?_sourcePage=-9vv2m58H1riMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp... 10/
-
- Fig1. Duty Cycles.
+Here is a graphical example of it from sparkfun.com:
+![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_6.png)
+Fig1. Duty Cycles.
 
 ### What is a H-Bridge?
 
- A H-Bridge is a circuit with 4 switches and a load at the centre, looking like a H:
+A H-Bridge is a circuit with 4 switches and a load at the centre, looking like a H:
 
+![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_7.png)
+Fig2. Very Simple H Bridge.
 
-### https://www.evernote.com/Home.action?_sourcePage=-9vv2m58H1riMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp... 11/
+In this example of the H Bridge, if S1 and S4 are turned on (top left to bottom right), then the motor will for example spin forward, whereas if S2 and S3 are turned on, the motor will spin backwards. However, as these are controlled via switches, its very easy to set this up to be controlled by a few lines of code, allowing the motor to told to follow a path. This can further be used with PWM by turning on/off the switches repeatedly to drive the motor at certain speeds or quickly turn a corner by inverting it and reverting it repeatedly.
 
- Fig2. Very Simple H Bridge.
+Turning on two on the same side essentially creates a quick path from the power to the ground and short circuits the power supply.
 
- In this example of the H Bridge, if S1 and S4 are turned on (top left to bottom right), then the motor will for example spin forward,
-
- whereas if S2 and S3 are turned on, the motor will spin backwards. However, as these are controlled via switches, its very easy to set
-
- this up to be controlled by a few lines of code, allowing the motor to told to follow a path. This can further be used with PWM by turning
-
- on/off the switches repeatedly to drive the motor at certain speeds or quickly turn a corner by inverting it and reverting it repeatedly.
-
- Turning on two on the same side essentially creates a quick path from the power to the ground and short circuits the power supply.
-
- For the first half of this lab session, we used a small RC Servo Motor to test it out, and used the following code for that.
+For the first half of this lab session, we used a small RC Servo Motor to test it out, and used the following code for that.
 
 ### Code
 
 ```
 int delaylength = 20;
 int speed = 255;
-```
 
-### https://www.evernote.com/Home.action?_sourcePage=-9vv2m58H1riMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp... 12/
-
-```
 void setup() {
 pinMode(12, OUTPUT); //HIGH = forwards and LOW = backwards
 pinMode(13, OUTPUT); //HIGH = forwards and LOW = backwards
 pinMode(9, OUTPUT);
 pinMode(8, OUTPUT);
 }
-```
-```
+
 void loop() {
 digitalWrite(9, LOW);
 digitalWrite(8, HIGH);
 digitalWrite(12, HIGH);
 analogWrite(3, speed);
 delay(delaylength);
-```
-```
+
 digitalWrite(9, HIGH);
 digitalWrite(8, LOW);
 digitalWrite(13, LOW);
 analogWrite(11, speed);
 delay(delaylength);
-```
-```
+
 digitalWrite(9, LOW);
 digitalWrite(8, HIGH);
 digitalWrite(12, LOW);
 analogWrite(3, speed);
 delay(delaylength);
-```
-```
+
 digitalWrite(9, HIGH);
 digitalWrite(8, LOW);
 digitalWrite(13, HIGH);
@@ -273,23 +234,17 @@ delay(delaylength);
  Very basic operation, simply making move back and forth.
 
 
-### https://www.evernote.com/Home.action?_sourcePage=-9vv2m58H1riMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp... 13/
-
 ### Close the loop
 
 ## Lab 5: Stepper Motors
 
- Stepper motors are synchronous electrical motors which create an equilibrium position when aligned with the stators of a magnetic
+Stepper motors are synchronous electrical motors which create an equilibrium position when aligned with the stators of a magnetic field. Sequencing the current in the coils forms a magnetic field, which causes a rotation of the motor.
 
- field. Sequencing the current in the coils forms a magnetic field, which causes a rotation of the motor.
+There are two main types, variable reluctance motors, where the rotor isn't permanently magnetised, and permenant magnet steppers, which are. There are also hybrid steppers, which combine both to improve torque, but are more expensive and have smaller steps.
 
- There are two main types, variable reluctance motors, where the rotor isn't permanently magnetised, and permenant magnet steppers,
+There are four ways of controlling them, which are covered in this lab. They are: full step (1 phase at a time), double step (2 phase at a time), half-step (1 or 2 phase a time) and microstepping (phase based on a sine-cosine wave).
 
- which are. There are also hybrid steppers, which combine both to improve torque, but are more expensive and have smaller steps.
-
- There are four ways of controlling them, which are covered in this lab. They are: full step (1 phase at a time), double step (2 phase at a
-
- time), half-step (1 or 2 phase a time) and microstepping (phase based on a sine-cosine wave).
+![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_8.png)
 
  Figure 1. A Hybrid Stepper
 
