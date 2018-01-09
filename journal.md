@@ -79,7 +79,7 @@ To improve the way the armature rotates, I would instead 3D Print out a box with
 
 We believe from this experiment, talking with classmate who used less coils than us, that using more does increase the speed of the motor, however without testing this more accurately, we cannot say for certain.
 
-###A Better DC Motor
+### A Better DC Motor
 
 ![alt text](https://github.com/FishySays/roco222/blob/master/image_14.png)
 
