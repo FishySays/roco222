@@ -9,17 +9,26 @@ I hope that by reading this document I have succeeded in writing this journal to
 ### Command Line 101
 
 ls - lists files and directories
+
 cd - changes current directory
+
 mkdir - creates new directories
+
 echo - writes to a file
+
 cat - "concatenate" creates/views/concatenates files
+
 cp - copies a file
+
 mv - moves/renames a file
+
 rm - deletes a file
+
 
 ### Github
 
 Again, hopefully this should be in a repository in my github account (FishySays), else how did you get here?
+
 
 
 
@@ -158,6 +167,7 @@ Figure 4. Left, showing what our encoder disk looked like, vs Right, showing wha
 
 
 
+
 ## Lab 4: Controlling the motor
 
 Arduino is a computer software/hardware hybrid microcontroller kit that uses open source software to develop small electronic projects. For this, we utilised the pinouts of it to control a DC motor, primarlily on ports 3, 8, 9, 11, 12 and 13. Using the arduino code, we simply set the pins to high, which sent a pulse along the wire to the motor, turning it on and giving us control. 
@@ -173,6 +183,7 @@ In hobby motors this is used in a feedback loop with a hall-effect sensor to ess
 
 Here is a graphical example of it from sparkfun.com:
 ![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_6.png)
+
 Fig1. Duty Cycles.
 
 ### What is a H-Bridge?
@@ -180,7 +191,9 @@ Fig1. Duty Cycles.
 A H-Bridge is a circuit with 4 switches and a load at the centre, looking like a H:
 
 ![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_7.png)
+
 Fig2. Very Simple H Bridge.
+
 
 In this example of the H Bridge, if S1 and S4 are turned on (top left to bottom right), then the motor will for example spin forward, whereas if S2 and S3 are turned on, the motor will spin backwards. However, as these are controlled via switches, its very easy to set this up to be controlled by a few lines of code, allowing the motor to told to follow a path. This can further be used with PWM by turning on/off the switches repeatedly to drive the motor at certain speeds or quickly turn a corner by inverting it and reverting it repeatedly.
 
@@ -236,6 +249,9 @@ void loop() {
 
 ### Close the loop
 
+
+
+
 ## Lab 5: Stepper Motors
 
 Stepper motors are synchronous electrical motors which create an equilibrium position when aligned with the stators of a magnetic field. Sequencing the current in the coils forms a magnetic field, which causes a rotation of the motor.
@@ -255,11 +271,12 @@ There are four ways of controlling them, which are covered in this lab. They are
 - 4 steps per revolution
 - 90 degree rotation
 
-####Truth Table:
+**Truth Table**:
+
 ![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_9.png)
 
 
-####Code:
+**Code**:
 
 ```
 void setup() {
@@ -314,7 +331,8 @@ void loop() {
 	delay(10);
 	Afwd();
 	Bback();
-	delay(10); }
+	delay(10); 
+}
 ```
 
 
@@ -324,12 +342,12 @@ void loop() {
 - 4 Steps per revolution
 - More Torque than 1 Phase
 
-####Truth Table:
+**Truth Table**:
 
 ![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_10.png)
 
 
-####Code:
+**Code**:
 
 ```
 //Same setup and variables as Full Step, trimmed out to reduce size of this file
@@ -380,11 +398,11 @@ void loop() {
 - 8 Steps per revolution
 - 45 degree rotation
 
-####Truth Table:
+**Truth Table**:
 
 ![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_11.png)
 
-####Code:
+**Code**:
 
 (again, same variables and setup as above)
 
@@ -465,9 +483,9 @@ void loop() {
 	delay(10);
 }
 ```
- As you can see, this initial code is a mess to look at and understand, so I wrote a simple variable called "check" that does exactly the
 
- same thing in half the lines of code, where A/B HL stand for the poles of the motor (A or B) going High or Low.
+ As you can see, this initial code is a mess to look at and understand, so I wrote a simple variable called "check" that does exactly the same thing in half the lines of code, where A/B HL stand for the poles of the motor (A or B) going High or Low.
+
 
 ```
 void setup() {
@@ -506,6 +524,7 @@ void loop() {
 	check(0, LOW, HIGH, 255, HIGH, LOW);//stopfwd
 	check(127, HIGH, LOW, 255, HIGH, LOW);//fwdhalffwd
 }
+'''
 
 
 ### Microstepping
@@ -594,6 +613,7 @@ void loop() {
 Overall I feel this lab session went well and I definitely learned a lot of different techniques in Arduino. The first 2 were very simplistic, but by the third task the simplistic techniques I was using, while they worked, could be cleaned up to make the code work smoother.
 
 This became very clear by the 4th task where I had to write several versions of the code until I settled on the piece above.
+
 
 
 
