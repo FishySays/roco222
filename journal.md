@@ -124,26 +124,26 @@ Pcount++;
 }
 
 void setup() {
-Serial.begin(9600);
-pinMode(ledPin, OUTPUT);
-pinMode(interruptPin, INPUT);
-// configure the interrupt call-back: blink is called everytime the pin
-// goes from low to high.
-attachInterrupt(digitalPinToInterrupt(interruptPin), blink, RISING);
+	Serial.begin(9600);
+	pinMode(ledPin, OUTPUT);
+	pinMode(interruptPin, INPUT);
+	// configure the interrupt call-back: blink is called everytime the pin
+	// goes from low to high.
+	attachInterrupt(digitalPinToInterrupt(interruptPin), blink, RISING);
 }
 
 void loop() {
-Pcount = 0; //reset to 0
-delay(20);
-digitalWrite(ledPin, state);
-int result = Pcount; //holds value
+	Pcount = 0; //reset to 0
+	delay(20);
+	digitalWrite(ledPin, state);
+	int result = Pcount; //holds value
 
-Serial.print(F("Pulse Count = "));
-Serial.println(result); //output to serial
+	Serial.print(F("Pulse Count = "));
+	Serial.println(result); //output to serial
 }
 
 void blink() {
-state = !state;
+	state = !state;
 }
 ```
 ### Conclusion
@@ -195,36 +195,36 @@ int delaylength = 20;
 int speed = 255;
 
 void setup() {
-pinMode(12, OUTPUT); //HIGH = forwards and LOW = backwards
-pinMode(13, OUTPUT); //HIGH = forwards and LOW = backwards
-pinMode(9, OUTPUT);
-pinMode(8, OUTPUT);
+	pinMode(12, OUTPUT); //HIGH = forwards and LOW = backwards
+	pinMode(13, OUTPUT); //HIGH = forwards and LOW = backwards
+	pinMode(9, OUTPUT);
+	pinMode(8, OUTPUT);
 }
 
 void loop() {
-digitalWrite(9, LOW);
-digitalWrite(8, HIGH);
-digitalWrite(12, HIGH);
-analogWrite(3, speed);
-delay(delaylength);
+	digitalWrite(9, LOW);
+	digitalWrite(8, HIGH);
+	digitalWrite(12, HIGH);
+	analogWrite(3, speed);
+	delay(delaylength);
 
-digitalWrite(9, HIGH);
-digitalWrite(8, LOW);
-digitalWrite(13, LOW);
-analogWrite(11, speed);
-delay(delaylength);
+	digitalWrite(9, HIGH);
+	digitalWrite(8, LOW);
+	digitalWrite(13, LOW);
+	analogWrite(11, speed);
+	delay(delaylength);
 
-digitalWrite(9, LOW);
-digitalWrite(8, HIGH);
-digitalWrite(12, LOW);
-analogWrite(3, speed);
-delay(delaylength);
+	digitalWrite(9, LOW);
+	digitalWrite(8, HIGH);
+	digitalWrite(12, LOW);
+	analogWrite(3, speed);
+	delay(delaylength);
 
-digitalWrite(9, HIGH);
-digitalWrite(8, LOW);
-digitalWrite(13, HIGH);
-analogWrite(11, speed);
-delay(delaylength);
+	digitalWrite(9, HIGH);
+	digitalWrite(8, LOW);
+	digitalWrite(13, HIGH);
+	analogWrite(11, speed);
+	delay(delaylength);
 }
 ```
 ### Video:
@@ -253,71 +253,70 @@ There are four ways of controlling them, which are covered in this lab. They are
 ### Full Step
 
 - 1 Phase at a time
-
-
-### https://www.evernote.com/Home.action?_sourcePage=-9vv2m58H1riMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp... 14/
-
 - 4 steps per revolution
 - 90 degree rotation
 
  Truth Table:
-
+![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_9.png)
  Code:
 
 ```
 void setup() {
-// put your setup code here, to run once:
-pinMode(12, OUTPUT);
-pinMode(9, OUTPUT);
-pinMode(8, OUTPUT);
-pinMode(13, OUTPUT);
+	// put your setup code here, to run once:
+	pinMode(12, OUTPUT);
+	pinMode(9, OUTPUT);
+	pinMode(8, OUTPUT);
+	pinMode(13, OUTPUT);
 }
+
 void Afwd() { //Motor A Forward
-digitalWrite(12, HIGH);
-digitalWrite(9, LOW);
+	digitalWrite(12, HIGH);
+	digitalWrite(9, LOW);
 }
+
 void Astop() { //Motor A Stop
-digitalWrite(12, LOW);
-digitalWrite(9, HIGH);
+	digitalWrite(12, LOW);
+	digitalWrite(9, HIGH);
 }
+
 void Aback(){ //Motor A Back
-digitalWrite(12, LOW);
-digitalWrite(9, LOW);
+	digitalWrite(12, LOW);
+	digitalWrite(9, LOW);
 }
+
 void Bfwd(){ //Motor B Forward
-digitalWrite(13, HIGH);
-digitalWrite(8, LOW);
-```
+	digitalWrite(13, HIGH);
+	digitalWrite(8, LOW);
+}
 
-### https://www.evernote.com/Home.action?_sourcePage=-9vv2m58H1riMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp... 15/
-
-# }
-
-```
 void Bstop(){ //Motor B Stop
-digitalWrite(13, LOW);
-digitalWrite(8, HIGH);
+	digitalWrite(13, LOW);
+	digitalWrite(8, HIGH);
 }
+
 void Bback(){ //Motor B Back
-digitalWrite(13, LOW);
-digitalWrite(8, LOW);
+	digitalWrite(13, LOW);
+	digitalWrite(8, LOW);
 }
+
 void loop() {
-analogWrite (3, 255);
-analogWrite (11, 255);
-Afwd();
-Bfwd();
-delay(10);
-Aback();
-Bfwd();
-delay(10);
-Aback();
-Bback();
-delay(10);
-Afwd();
-Bback();
-delay(10); }
+	analogWrite (3, 255);
+	analogWrite (11, 255);
+	Afwd();
+	Bfwd();
+	delay(10);
+	Aback();
+	Bfwd();
+	delay(10);
+	Aback();
+	Bback();
+	delay(10);
+	Afwd();
+	Bback();
+	delay(10); }
 ```
+
+
 ### Double Step
 
 - 2 Phases at a time
@@ -326,49 +325,54 @@ delay(10); }
 
  Truth Table:
 
+![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_10.png)
 
-### https://www.evernote.com/Home.action?_sourcePage=-9vv2m58H1riMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp... 16/
 
  Code:
 
 ```
 //Same setup and variables as Full Step, trimmed out to reduce size of this file
-```
-```
+
 void loop() {
-analogWrite (3, 255);
-analogWrite (11, 255);
-Afwd();
-Bstop();
-delay(10);
-Afwd();
-Bfwd();
-delay(10);
-Astop();
-Bfwd();
-delay(10);
-Aback();
-Bfwd();
-delay(10);
-Aback();
-Bstop();
-delay(10);
-Aback();
-Bback();
-delay(10);
-Astop();
-```
+	analogWrite (3, 255);
+	analogWrite (11, 255);
 
-### https://www.evernote.com/Home.action?_sourcePage=-9vv2m58H1riMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp... 17/
 
-```
-Bback();
-delay(10);
-Afwd();
-Bback();
-delay(10);
+	Afwd();
+	Bstop();
+	delay(10);
+
+	Afwd();
+	Bfwd();
+	delay(10);
+
+	Astop();
+	Bfwd();
+	delay(10);
+
+	Aback();
+	Bfwd();
+	delay(10);
+
+	Aback();
+	Bstop();
+	delay(10);
+
+	Aback();
+	Bback();
+	delay(10);
+
+	Astop();
+	Bback();
+	delay(10);
+
+	Afwd();
+	Bback();
+	delay(10);
 }
 ```
+
+
 ### Half Step
 
 - 1 or 2 Phases on at a time
@@ -377,90 +381,87 @@ delay(10);
 
  Truth Table:
 
+![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_11.png)
+
  Code:
+
+(again, same variables and setup as above)
 
 ```
 void Bfwdhalf(){
-analogWrite (11, 127);
-digitalWrite(13, HIGH);
-```
-
-### https://www.evernote.com/Home.action?_sourcePage=-9vv2m58H1riMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp... 18/
-
-```
-digitalWrite(8, LOW);
+	analogWrite (11, 127);
+	digitalWrite(13, HIGH);
+	digitalWrite(8, LOW);
 }
-```
-```
+
 void Bbackhalf(){
-analogWrite (11, 127);
-digitalWrite(13, LOW);
-digitalWrite(8, LOW);
+	analogWrite (11, 127);
+	digitalWrite(13, LOW);
+	digitalWrite(8, LOW);
 }
+
 void Afwdhalf() {
-analogWrite (3, 127);
-digitalWrite(12, HIGH);
-digitalWrite(9, LOW);
+	analogWrite (3, 127);
+	digitalWrite(12, HIGH);
+	digitalWrite(9, LOW);
 }
+
 void Abackhalf(){
-analogWrite (3, 127);
-digitalWrite(12, LOW);
-digitalWrite(9, LOW);
+	analogWrite (3, 127);
+	digitalWrite(12, LOW);
+	digitalWrite(9, LOW);
 }
+
+
 void loop() {
-Afwd(); //
-Bfwd();
-delay(10);
-Afwd(); //
-Bfwdhalf();
-delay(10);
-Afwd(); //
-Bstop();
-delay(10);
-Afwd(); //
-Bbackhalf();
-delay(10);
-Afwd(); //
-Bback();
-delay(10);
-Afwdhalf(); //
-Bback();
-```
-
-### https://www.evernote.com/Home.action?_sourcePage=-9vv2m58H1riMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp... 19/
-
-```
-delay(10);
-Astop(); //
-Bback();
-delay(10);
-Abackhalf();//
-Bback();
-delay(10);
-Aback(); //
-Bback();
-delay(10);
-Aback(); //
-Bbackhalf();
-delay(10);
-Aback(); //
-Bstop();
-delay(10);
-Aback(); //
-Bfwdhalf();
-delay(10);
-Aback(); //
-Bfwd();
-delay(10);
-Abackhalf();//
-Bfwd();
-delay(10);
-Astop(); //
-Bfwd();
-delay(10);
-Afwdhalf(); //
-Bfwd();
-delay(10);
+	Afwd(); //1
+	Bfwd();
+	delay(10);
+	Afwd(); //2
+	Bfwdhalf();
+	delay(10);
+	Afwd(); //3
+	Bstop();
+	delay(10);
+	Afwd(); //4
+	Bbackhalf();
+	delay(10);
+	Afwd(); //5
+	Bback();
+	delay(10);
+	Afwdhalf(); //6
+	Bback();
+	delay(10);
+	Astop(); //7
+	Bback();
+	delay(10);
+	Abackhalf();//8
+	Bback();
+	delay(10);
+	Aback(); //9
+	Bback();
+	delay(10);
+	Aback(); //10
+	Bbackhalf();
+	delay(10);
+	Aback(); //11
+	Bstop();
+	delay(10);
+	Aback(); //12
+	Bfwdhalf();
+	delay(10);
+	Aback(); //13
+	Bfwd();
+	delay(10);
+	Abackhalf();//14
+	Bfwd();
+	delay(10);
+	Astop(); //15
+	Bfwd();
+	delay(10);
+	Afwdhalf(); //16
+	Bfwd();
+	delay(10);
 }
 ```
  As you can see, this initial code is a mess to look at and understand, so I wrote a simple variable called "check" that does exactly the
@@ -469,29 +470,21 @@ delay(10);
 
 ```
 void setup() {
-```
-
-### https://www.evernote.com/Home.action?_sourcePage=-9vv2m58H1riMUD9T65RG_YvRLZ-1eYO3fqfqRu0fynRL_1nukNa4gH1t86pc1SP&__fp... 20/
-
-```
-// put your setup code here, to run once:
-pinMode(12, OUTPUT);
-pinMode(9, OUTPUT);
-pinMode(8, OUTPUT);
-pinMode(13, OUTPUT);
+	// put your setup code here, to run once:
+	pinMode(12, OUTPUT);
+	pinMode(9, OUTPUT);
+	pinMode(8, OUTPUT);
+	pinMode(13, OUTPUT);
 }
-```
-```
+
 int check (int Aspeed, boolean AHL1, boolean AHL2, int Bspeed, boolean BHL1, boolean BHL2){
-```
-```
-analogWrite(3, Aspeed);
-digitalWrite(12, AHL1);
-digitalWrite(9, AHL2);
-analogWrite(11, Bspeed);
-digitalWrite(13, BHL1);
-digitalWrite(8, BHL2);
-delay(10);
+	analogWrite(3, Aspeed);
+	digitalWrite(12, AHL1);
+	digitalWrite(9, AHL2);
+	analogWrite(11, Bspeed);
+	digitalWrite(13, BHL1);
+	digitalWrite(8, BHL2);
+	delay(10);
 }
 ```
 ```
