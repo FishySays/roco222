@@ -81,7 +81,7 @@ We believe from this experiment, talking with classmate who used less coils than
 
 ###A Better DC Motor
 
-![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_14.png)
+![alt text](https://github.com/FishySays/roco222/blob/master/image_14.png)
 
 This is our improved DC Motor, with two coils attached.
 
