@@ -524,7 +524,7 @@ void loop() {
 	check(0, LOW, HIGH, 255, HIGH, LOW);//stopfwd
 	check(127, HIGH, LOW, 255, HIGH, LOW);//fwdhalffwd
 }
-'''
+```
 
 
 ### Microstepping
