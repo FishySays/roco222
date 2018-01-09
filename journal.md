@@ -77,9 +77,18 @@ Another thing that would help to keep the brushes attached is we could have clam
 
 To improve the way the armature rotates, I would instead 3D Print out a box with holes on either end, then when building this again, I would slide the pins through the hole into the cork waiting in the middle, which would be a lot more sturdy than the paperclips we used for this one.
 
- We believe from this experiment, talking with classmate who used less coils than us, that using more does increase the speed of the motor, however without testing this more accurately, we cannot say for certain.
+We believe from this experiment, talking with classmate who used less coils than us, that using more does increase the speed of the motor, however without testing this more accurately, we cannot say for certain.
 
+###A Better DC Motor
 
+![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_14.png)
+
+This is our improved DC Motor, with two coils attached.
+
+Although we didn't have time to reach the further ways to improve the design, we discussed them and came up with these conclusions:
+- A better way to hold the brushes would be using clamps, as mentioned in my conclusion above.
+- We could improve armature rotation by 3D Printing proper brackets to hold the armature and even the magnets, as the paperclips are extremely flimsy.
+- Increasing the number of turns would improve rotational speed, as does increasing the number of coils.
 
 ## Lab 3: Incremental Encoder
 
@@ -687,11 +696,62 @@ Using the two pieces of code provided, we managed to get ROS to control it, as s
 
 And here are the pieces of code:
 
+**ROS1**
 ```
+#include <Servo.h>
+Servo myservo;
+int pos = 0;
+
+void setup() {
+  myservo.attach(9); // attaches the servo on pin 9 to the servo object
+}
+
+void loop() {
+  for (pos = 0; pos <= 180; pos += 1) {
+    // in steps of 1 degree
+    myservo.write(pos);
+    delay(15);
+  }
+  for (pos = 180; pos >= 0; pos -= 1) {
+    myservo.write(pos);
+    delay(15);
+  }
+}
 
 ```
 
+
+**ROS2**
 ```
 
+#include <ros.h>
+#include <std_msgs/UInt16.h>
+#include <Servo.h>
+
+using namespace ros;
+
+NodeHandle nh;
+Servo servo1;
+Servo servo2;
+
+void cb (const std_msgs::UInt16& msg){
+  servo1.write(msg.data);
+  servo2.write(msg.data);
+}
+
+void setup() {
+  // put your setup code here, to run once:
+  nh.initNode()
+  nh.subscribe(sub);
+
+  servo1.attach(9);
+  servo2.attach(10);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  nh.spinOnce();
+  delay(1);
+}
 ```
 
