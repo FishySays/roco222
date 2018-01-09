@@ -8,29 +8,32 @@ I hope that by reading this document I have succeeded in writing this journal to
 
 ### Command Line 101
 
-ls - lists files and directories
+- ls - lists files and directories
 
-cd - changes current directory
+- cd - changes current directory
 
-mkdir - creates new directories
+- mkdir - creates new directories
 
-echo - writes to a file
+- echo - writes to a file
 
-cat - "concatenate" creates/views/concatenates files
+- cat - "concatenate" creates/views/concatenates files
 
-cp - copies a file
+- cp - copies a file
 
-mv - moves/renames a file
+- mv - moves/renames a file
 
-rm - deletes a file
+- rm - deletes a file
 
 
 ### Github
 
 Again, hopefully this should be in a repository in my github account (FishySays), else how did you get here?
 
+Here is my first repository (already committed to!)
+![alt text](https://github.com/FishySays/roco222/blob/master/image_13.png)
 
-
+And here is my first pull-push!
+![alt text](https://github.com/FishySays/roco222/blob/master/image_12.png)
 
 ## Lab 2: Build a DC Motor
 
