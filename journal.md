@@ -35,33 +35,6 @@ Here is my first repository (already committed to!)
 And here is my first pull-push!
 ![alt text](https://github.com/FishySays/roco222/blob/master/image_12.png)
 
-**Cheat Sheet for Github**
-To start:
-- git init (from scratch)
-- git clone <url> (from existing)
-
-Commits:
-- git add
-- git rm
-- git add -p
-- git commit (the most important bit)
-
-Remotes:
-- git remote add <name> <url>
-- git pull <remote> <branch> (without the bits on the end, pulls everything)
-- git push <remote> <branch> (without the bits on the end, pushes everything)
-
-Branches:
-- git checkout -b <branch> (Creating a branch)
-- git checkout <branch> (Jumping between branches)
-- git rebase <branch> (Importing another branch)
-
-Other useful:
-- git status (state of repo)
-- git log (history of the repo)
-- git blame (self explanatory)
-- git reflog (recovery)
-
 ## Lab 2: Build a DC Motor
 
 ### What is a DC Motor?
@@ -74,17 +47,15 @@ DC Motors are created from the central armature of a coil of wire, being powered
 
 ### Methodology
 
-**Parts used**
+ For starters, we had to build the DC motor from scratch. For this we were given; a piece of copper tape (that we split in two) a cork, which we wrapped the copper tape around and sellotaped together. This created our commentator. We then added pins into each end of the cork to either end, creating the shaft for rotation.
 
-- A Cork
-- 10m of Copper Wire
-- Copper Tape
-- 2 Nails
-- 4 Neodymium Magnets
-- 4 Large Paperclips
-- 4 Washers and Screws
+<image of it without wire on it>
 
-For starters, we had to build the DC motor from scratch. For this we were given; a piece of copper tape (that we split in two) a cork, which we wrapped the copper tape around and sellotaped together. This created our commentator. We then added pins into each end of the cork to either end, creating the shaft for rotation. After that, we took the 10m of copper wire supplied, and wrapped it around the cork length-ways, thereby creating a coil around the cork. This gave us 100 turns. We then soldered the ends of the wire to the commentator, completing the commutator. After this we created a support shaft out of a plank of cardboard, some paperclips creating this.
+After that, we took the 10m of copper wire supplied, and wrapped it around the cork length-ways, thereby creating a coil around the cork. This gave us 100 turns. We then soldered the ends of the wire to the commentator, completing the commutator.
+
+<image not on the board>
+
+After this we created a support shaft out of a plank of cardboard, some paperclips creating this.
 
 ![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_1.png)
 
@@ -123,7 +94,7 @@ Although we didn't have time to reach the further ways to improve the design, we
 
 ### What is an incremental encoder?
 
-An incremental encoder is defined as a pulse generator that creates square-wave signals and a zero index. (<http://www.optical-encoders.eu/encoders.html>). Essentially, it converts a displacement (of the disk) into digital pulse signals.
+ An incremental encoder is defined as a pulse generator that creates square-wave signals and a zero index. (<http://www.optical-encoders.eu/encoders.html>). Essentially, it converts a displacement (of the disk) into digital pulse signals.
 
 This is made using a rotating disk (usually set to a electric motor), a light source and a photo detector. It works by providing a set amount of pulses in a rotation of the encoder. By knowing the pulses in the rotation and the how long it is for a rotation to complete, you can use it to determine the current rotation of the encoder. This happens because as the encoder disk spins, it recieves pulses of light, which in turn create electrical pulses, which on an oscilloscope or an object looking for a signal, would come out as a 1, and when the target it blocked, creates a 0. As the disk rotates faster, so too does the pulse frequency, therefore the pulse frequency is an indication of the speed of the rotation.
 
@@ -134,7 +105,6 @@ Other incremental encoders commonly use two output channels to determine the pos
 By using a photo transistor across from an ultraviolet LED, we were able to create a simplifier incremental encoder via the circuit below.
 
 ![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_2.png)
-
 Figure 1. The circuit diagram.
 
 Across the phototransistor we hooked up an oscilloscope, and this was the completed circuit, minus the motor.
@@ -228,7 +198,7 @@ Here is a graphical example of it from sparkfun.com:
 
 Fig1. Duty Cycles.
 
-### What is an H-Bridge?
+### What is a H-Bridge?
 
 A H-Bridge is a circuit with 4 switches and a load at the centre, looking like a H:
 
@@ -304,11 +274,11 @@ There are four ways of controlling them, which are covered in this lab. They are
 
 ![alt text](https://github.com/FishySays/journallymcjournal/blob/master/image_8.png)
 
- Figure 1. A Hybrid Stepper
-
- Motor
+ Figure 1. A Hybrid Stepper Motor
 
 
+### Full Step
+ 
 - 1 Phase at a time
 - 4 steps per revolution
 - 90 degree rotation
@@ -377,6 +347,7 @@ void loop() {
 }
 ```
 
+Here is the video of full step: https://www.youtube.com/watch?v=Tzk54A5l6F8
 
 ### Double Step
 
@@ -433,6 +404,7 @@ void loop() {
 }
 ```
 
+Here is the doublestep video: https://www.youtube.com/watch?v=fhwTeYK99GA
 
 ### Half Step
 
@@ -567,6 +539,8 @@ void loop() {
 	check(127, HIGH, LOW, 255, HIGH, LOW);//fwdhalffwd
 }
 ```
+
+And here is the video of it working: https://www.youtube.com/watch?v=i3rMahLOW1I
 
 
 ### Microstepping
@@ -720,7 +694,7 @@ Here they are sweeping: https://www.youtube.com/watch?v=T_9FXfGmq7Y
 
 ### The Physical Design
 
-### ROS Control
+###ROS Control
 
 Using the two pieces of code provided, we managed to get ROS to control it, as shown in this video:
 
