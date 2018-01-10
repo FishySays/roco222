@@ -694,7 +694,288 @@ Here they are sweeping: https://www.youtube.com/watch?v=T_9FXfGmq7Y
 
 ### The Physical Design
 
-###ROS Control
+This is the design we chose for the arm.
+![alt text](https://github.com/FishySays/roco222/blob/master/ros1.png)
+
+As we can see, the two degrees of freedom lie on the baseplate and the joint in the middle. Had we been able to source a third servo, we would have upped to three degrees of freedom and made the gripper move somehow.
+
+![alt text](https://github.com/FishySays/roco222/blob/master/ros2.png)
+
+Here it shows our two joints at various positions.
+
+### URDF File to launch
+
+```
+<launch>
+  <arg name="model" />
+  <arg name="gui" default="False" />
+  <param name="robot_description" textfile="$(find final)/urdf/final.urdf" />
+  <param name="use_gui" value="$(arg gui)" />
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find final)/urdf.rviz" />
+</launch>
+
+```
+
+### URDF Final File for the Arm
+
+```
+<robot
+  name="final">
+<!--<link name="map">
+	<visual>
+	<origin xyz="0 0 0" rpy="0 0 0"/>
+	<geometry>
+		<box size="0.1 0.1 0.1"/>
+	</geometry>
+	</visual>
+</link>  -->
+
+
+
+
+<link
+    name="baselink">
+   <!-- <inertial>
+      <origin
+        xyz="0.0289573098297565 0.0395518547237048 0.0847632618649911"
+        rpy="0 0 0" />
+      <mass
+        value="0.0597267797400795" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>-->
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://final/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://final/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="link1">
+    <inertial>
+      <origin
+        xyz="5.31220839886104E-11 0.0337219220577653 0.0267729199184993"
+        rpy="0 0 1.57" />
+      <mass
+        value="0.03745547596626" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://final/meshes/link1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.627450980392157 0.627450980392157 0.627450980392157 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://final/meshes/link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint1"
+    type="revolute">
+    <origin
+      xyz="0.0018615 -0.062046 0.066282"
+      rpy="1.57 0 0" />
+    <parent
+      link="baselink" />
+    <child
+      link="link1" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      effort="0"
+      velocity="0" lower="-1.57" upper="1.57" />
+  </joint>
+  <link
+    name="link2">
+    <inertial>
+      <origin
+        xyz="-4.98101559998076E-12 0.0420081965687308 0.0275965656366171"
+        rpy="0 0 0" />
+      <mass
+        value="0.045750001553657" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://final/meshes/link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.627450980392157 0.627450980392157 0.627450980392157 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://final/meshes/link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint2"
+    type="revolute">
+    <origin
+      xyz="0 0.07 0.01"
+      rpy="0 0 -1.2051" />
+    <parent
+      link="link1" />
+    <child
+      link="link2" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      effort="0"
+      velocity="0" lower="-1.57" upper="1.57" />
+  </joint>
+
+  <link
+    name="link3">
+    <inertial>
+      <origin
+        xyz="0.0375 0.0100000000000002 0.0310919540229886"
+        rpy="0 0 0" />
+      <mass
+        value="0.029" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://final/meshes/link3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.627450980392157 0.627450980392157 0.627450980392157 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://final/meshes/link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  
+<joint
+    name="joint3"
+    type="fixed">
+    <origin
+      xyz="-0.0375 0.145 0.0175"
+      rpy="1.57 0 0" />
+    <parent
+      link="link2" />
+    <child
+      link="link3" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+<!--<joint name="mapjnt" type="fixed">
+<origin xyz="0 0 0" rpy="0 0 0"/>
+<parent link="map"/>
+<child link="baselink"/>
+</joint>
+<joint name="jnt1" type="fixed">
+<origin xyz="0 0 0" rpy="0 0 0"/>
+<parent link="map"/>
+<child link="link1"/>
+</joint>
+<joint name="jnt2" type="fixed">
+<origin xyz="0 0 0" rpy="0 0 0"/>
+<parent link="map"/>
+<child link="link2"/>
+</joint>-->
+</robot>
+
+```
+
+The simple launch file uses 2 nodes in addition to roscore to launch. Here are some of the screenshots of it launching.
+
+![alt text](https://github.com/FishySays/roco222/blob/master/ros3.png)
+
+Fig1. In the terminal.
+
+![alt text](https://github.com/FishySays/roco222/blob/master/ros5.png)
+
+Fig2. In roscore
+
+![alt text](https://github.com/FishySays/roco222/blob/master/ros4.png)
+
+Fig3. Into Rviz
+
+### ROS Control
 
 Using the two pieces of code provided, we managed to get ROS to control it, as shown in this video:
 
